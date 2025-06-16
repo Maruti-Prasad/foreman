@@ -40,10 +40,6 @@ flows:
               group_id = group.get('id')
               break
       
-      if group_id is None:
-          raise Exception(f"Group '{groupName}' not found")
-      
       result.set('groupId', group_id)
-      print(f"Found group '{groupName}' with ID: {group_id}")
     out:
       groupId: "${result.groupId}"
