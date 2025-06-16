@@ -10,6 +10,7 @@ flows:
   default:
   - set:
       date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
+      groupName: "test"
       url: "https://192.168.56.10"
   - task: http
     in:
