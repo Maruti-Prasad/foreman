@@ -35,6 +35,11 @@ flows:
           if group.get('name') == groupName:
               group_id = group.get('id')
               break
-      result.set('groupId', group_id)
+      if group_id is None:
+          print("Group '{}' not found".format(groupName))
+          result.set('groupId', None)
+      else:
+          print("Found group '{}' with ID: {}".format(groupName, group_id))
+          result.set('groupId', group_id)
     out:
       groupId: "${result.groupId}"
