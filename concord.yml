@@ -1,9 +1,6 @@
 configuration:
   dependencies:
-  - "mvn://org.codehaus.groovy:groovy-all:pom:2.5.23"
   - "mvn://org.python:jython-standalone:2.7.4"
-  - "mvn://org.jruby:jruby:9.1.17.0"
-  - "mvn://com.walmartlabs.concord.plugins.basic:ansible-tasks:2.14.0"
   runtime: "concord-v2"
 
 flows:
