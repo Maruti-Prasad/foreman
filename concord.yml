@@ -21,6 +21,6 @@ flows:
      url: ${url}/api/usergroups
      response: "json"
      ignoreSslErrors: true
-     out: rsp
+    out: rsp
      
   - log: "statusCode: ${rsp}"
