@@ -29,7 +29,7 @@ flows:
   - script: python
     body: |
       import json
-      response_data = json.loads(rsp['content'])
+      response_data = rsp['content']
       group_id = None
       for group in response_data.get('results', []):
           if group.get('name') == groupName:
