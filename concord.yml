@@ -42,6 +42,8 @@ flows:
           result.set('foundGroup', True)
     out:
       groupId: "${result.groupId}"
+      foundGroup: "${result.foundGroup}"
+
 
   - if: ${foundGroup}
     then:
