@@ -20,7 +20,7 @@ flows:
         password: "_FJxZfySmLXIr9AtjhWOfQ"
      url: ${url}/api/usergroups
      response: "json"
-     ignoreSslErrors
+     ignoreSslErrors: true
      out: rsp
      
   - log: "statusCode: ${rsp.statusCode}"
