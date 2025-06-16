@@ -34,14 +34,16 @@ flows:
               break
       if group_id is None:
           print("Group '{}' not found".format(groupName))
-          result.set('groupId', None)
+          result.set('groupId', "")  # Set empty string instead of None
+          result.set('foundGroup', False)
       else:
           print("Found group '{}' with ID: {}".format(groupName, group_id))
-          result.set('groupId', group_id)
+          result.set('groupId', str(group_id))  # Convert to string
+          result.set('foundGroup', True)
     out:
       groupId: "${result.groupId}"
 
-  - if: ${groupId != null}
+  - if: ${foundGroup}
     then:
       - log: "Group ID found: ${groupId}"
       # Add your delete logic here
