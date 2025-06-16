@@ -23,4 +23,4 @@ flows:
      ignoreSslErrors: true
      out: rsp
      
-  - log: "statusCode: ${rsp.statusCode}"
+  - log: "statusCode: ${rsp}"
