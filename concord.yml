@@ -43,3 +43,21 @@ flows:
           result.set('groupId', group_id)
     out:
       groupId: "${result.groupId}"
+
+  - if: ${groupId != null}
+    then:
+      - log: "Group ID found: ${groupId}"
+      # Add your delete logic here
+      - task: http
+        in:
+         method: DELETE
+         auth:
+          basic:
+            username: "admin"
+            password: "_FJxZfySmLXIr9AtjhWOfQ"
+         url: ${url}/api/usergroups/${groupId}
+         ignoreSslErrors: true
+        out: deleteRsp
+      - log: "Delete response: ${deleteRsp.statusCode}"
+    else:
+      - log: "Cannot delete group - group not found"
