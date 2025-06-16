@@ -29,17 +29,12 @@ flows:
   - script: python
     body: |
       import json
-      
-      # Parse the HTTP response
       response_data = json.loads(rsp['content'])
-      
-      # Find the group with matching name
       group_id = None
       for group in response_data.get('results', []):
           if group.get('name') == groupName:
               group_id = group.get('id')
               break
-      
       result.set('groupId', group_id)
     out:
       groupId: "${result.groupId}"
