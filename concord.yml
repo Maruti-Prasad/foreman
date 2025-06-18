@@ -15,7 +15,7 @@ flows:
      auth:
       basic:
         username: "admin"
-        password: "wyBuwyFwndEwx2Qu"
+        password: "uYLyx45Ao7P26K5kYOr4HA"
      url: ${url}/api/usergroups
      response: "json"
      ignoreSslErrors: true
@@ -55,7 +55,7 @@ flows:
          auth:
           basic:
             username: "admin"
-            password: "wyBuwyFwndEwx2Qu"
+            password: "uYLyx45Ao7P26K5kYOr4HA"
          url: ${url}/api/usergroups/${groupId}/users
          response: "json"
          ignoreSslErrors: true
@@ -69,7 +69,7 @@ flows:
          auth:
           basic:
             username: "admin"
-            password: "wyBuwyFwndEwx2Qu"
+            password: "uYLyx45Ao7P26K5kYOr4HA"
          url: ${url}/api/usergroups
          headers:
            Content-Type: "application/json"
@@ -91,7 +91,7 @@ flows:
          auth:
           basic:
             username: "admin"
-            password: "wyBuwyFwndEwx2Qu"
+            password: "uYLyx45Ao7P26K5kYOr4HA"
          url: ${url}/api/usergroups/${groupId}
          ignoreSslErrors: true
         out: deleteRsp
