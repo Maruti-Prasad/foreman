@@ -73,10 +73,7 @@ flows:
          url: ${url}/api/usergroups
          headers:
            Content-Type: "application/json"
-         body:
-           obj:
-             name: "test1"
-             description: "Backup group created before deleting ${groupName}"
+         body: '{"name": "test1", "description": "Backup group created before deleting ${groupName} on ${date}"}'
          request: json
          response: json
          ignoreSslErrors: true
