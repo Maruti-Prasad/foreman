@@ -81,8 +81,10 @@ flows:
             basic:
               username: "admin"
               password: "uYLyx45Ao7P26K5kYOr4HA"
-          contentType: application/json
-          accept: application/json
+          headers:
+             ContentType: application/json
+          request: json
+          response: json
           body:
             usergroup:
               user_ids: ${user_ids}
