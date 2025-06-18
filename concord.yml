@@ -79,7 +79,7 @@ flows:
         out:
           usersList: "${result.usersList}"
           hasUsers: "${result.hasUsers}"
-      - log: "${result.usersList}"
+      - log: "${usersList}"
 
       # Step 4: Create new group
       - task: http
