@@ -73,11 +73,9 @@ flows:
          url: ${url}/api/usergroups
          headers:
            Content-Type: "application/json"
-         body: |
-           {
-             "name": "test2",
-             "description": "Backup group created before deleting ${groupName} on ${date}"
-           }
+         request:
+           name: "test1"
+           description: "Backup group created before deleting ${groupName} "
          response: "json"
          ignoreSslErrors: true
         out: createRsp
