@@ -75,14 +75,14 @@ flows:
            Content-Type: "application/json"
          body:
            obj:
-             name: test1
+             name: "test1"
              description: "Backup group created before deleting ${groupName}"
          request: json
          response: json
          ignoreSslErrors: true
         out: createRsp
       
-      - log: "Create new group response: ${createRsp.statusCode}"
+      - log: "Create new group response: ${createRsp}"
       
       # Add your delete logic here
       - task: http
