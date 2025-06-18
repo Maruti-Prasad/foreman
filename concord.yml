@@ -65,7 +65,8 @@ flows:
       - script: python
         body: |
           import json
-          users_list =  usersRsp['results']
+          users_data = usersRsp.get('content', {})
+          users_list = users_data.get('results', [])
           
           if users_list:
               print("Found {} users to move".format(len(users_list)))
