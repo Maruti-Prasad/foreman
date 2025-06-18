@@ -15,7 +15,7 @@ flows:
      auth:
       basic:
         username: "admin"
-        password: "_FJxZfySmLXIr9AtjhWOfQ"
+        password: "wyBuwyFwndEwx2Qu"
      url: ${url}/api/usergroups
      response: "json"
      ignoreSslErrors: true
@@ -48,6 +48,42 @@ flows:
   - if: ${foundGroup}
     then:
       - log: "Group ID found: ${groupId}"
+      # Step 3: Get users in the original group
+      - task: http
+        in:
+         method: GET
+         auth:
+          basic:
+            username: "admin"
+            password: "wyBuwyFwndEwx2Qu"
+         url: ${url}/api/usergroups/${groupId}/users
+         response: "json"
+         ignoreSslErrors: true
+        out: usersRsp
+      - log: "Users in group response: ${usersRsp.statusCode}"
+
+      # Step 4: Create new group
+      - task: http
+        in:
+         method: POST
+         auth:
+          basic:
+            username: "admin"
+            password: "wyBuwyFwndEwx2Qu"
+         url: ${url}/api/usergroups
+         headers:
+           Content-Type: "application/json"
+         body: |
+           {
+             "name": "test2",
+             "description": "Backup group created before deleting ${groupName} on ${date}"
+           }
+         response: "json"
+         ignoreSslErrors: true
+        out: createRsp
+      
+      - log: "Create new group response: ${createRsp.statusCode}"
+      
       # Add your delete logic here
       - task: http
         in:
@@ -55,7 +91,7 @@ flows:
          auth:
           basic:
             username: "admin"
-            password: "_FJxZfySmLXIr9AtjhWOfQ"
+            password: "wyBuwyFwndEwx2Qu"
          url: ${url}/api/usergroups/${groupId}
          ignoreSslErrors: true
         out: deleteRsp
