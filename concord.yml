@@ -60,7 +60,7 @@ flows:
          response: "json"
          ignoreSslErrors: true
         out: usersRsp
-      - log: "Users in group response: ${usersRsp.content}"
+      - log: "Users in group response: ${usersRsp.content.results}"
 
       - script: python
         body: |
