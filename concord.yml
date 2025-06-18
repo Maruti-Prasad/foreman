@@ -76,7 +76,7 @@ flows:
       - task: http
         in:
           method: PUT
-          url: "${url}/api/usergroups/${group_id}"
+          url: "${url}/api/usergroups/${groupId}"
           auth:
             basic:
               username: "admin"
