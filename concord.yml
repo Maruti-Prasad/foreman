@@ -60,7 +60,25 @@ flows:
          response: "json"
          ignoreSslErrors: true
         out: usersRsp
-      - log: "Users in group response: ${usersRsp.statusCode}"
+      - log: "Users in group response: ${usersRsp}"
+
+      - script: python
+        body: |
+          import json
+          users_list = usersRsp.get('results', [])
+          
+          if users_list:
+              print("Found {} users to move".format(len(users_list)))
+              result.set('usersList', users_list)
+              result.set('hasUsers', True)
+          else:
+              print("No users found in the original group")
+              result.set('usersList', [])
+              result.set('hasUsers', False)
+        out:
+          usersList: "${result.usersList}"
+          hasUsers: "${result.hasUsers}"
+      - log: "${result.usersList}"
 
       # Step 4: Create new group
       - task: http
