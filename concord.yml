@@ -67,19 +67,24 @@ flows:
           import json
           users_data = usersRsp.get('content', {})
           users_list = users_data.get('results', [])
-          
-          if users_list:
-              print("Found {} users to move".format(len(users_list)))
-              result.set('usersList', users_list)
-              result.set('hasUsers', True)
-          else:
-              print("No users found in the original group")
-              result.set('usersList', [])
-              result.set('hasUsers', False)
+          logins = [user['login'] for user in users_list if user.get('login')]
         out:
-          usersList: "${result.usersList}"
-          hasUsers: "${result.hasUsers}"
-      - log: "${usersList}"
+          logins: "${result.logins}"
+      - log: "${logins}"
+
+      - task: http
+        in:
+          method: PUT
+          url: "${foreman_url}/api/usergroups/${group_id}"
+          auth:
+            type: basic
+            username: "${auth_user}"
+            password: "${auth_pass}"
+          contentType: application/json
+          accept: application/json
+          body:
+            usergroup:
+              user_ids: ${user_ids}
 
       # Step 4: Create new group
       - task: http
