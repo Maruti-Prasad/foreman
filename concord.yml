@@ -69,7 +69,7 @@ flows:
           users_list = users_data.get('results', [])
           logins = [user['login'] for user in users_list if user.get('login')]
         out:
-          logins: "${result.users_list}"
+          logins: "${result.users_data}"
       - log: "${logins}"
 
       - task: http
