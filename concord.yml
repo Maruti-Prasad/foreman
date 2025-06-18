@@ -76,11 +76,11 @@ flows:
       - task: http
         in:
           method: PUT
-          url: "${foreman_url}/api/usergroups/${group_id}"
+          url: "${url}/api/usergroups/${group_id}"
           auth:
-            type: basic
-            username: "${auth_user}"
-            password: "${auth_pass}"
+            basic:
+              username: "admin"
+              password: "uYLyx45Ao7P26K5kYOr4HA"
           contentType: application/json
           accept: application/json
           body:
