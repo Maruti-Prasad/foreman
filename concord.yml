@@ -60,12 +60,12 @@ flows:
          response: "json"
          ignoreSslErrors: true
         out: usersRsp
-      - log: "Users in group response: ${usersRsp.results}"
+      - log: "Users in group response: ${usersRsp}"
 
       - script: python
         body: |
           import json
-          users_list =  rsp['results']
+          users_list =  usersRsp['results']
           
           if users_list:
               print("Found {} users to move".format(len(users_list)))
