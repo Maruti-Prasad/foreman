@@ -65,13 +65,12 @@ flows:
       - script: python
         body: |
           import json
-          test = usersRsp
           users_data = usersRsp.get('content', {})
           users_list = users_data.get('results', [])
           logins = [user['login'] for user in users_list if user.get('login')]
-          result.set("test", test)
+          result.set("logins", logins)
         out:
-          logins: "${result.test}"
+          logins: "${result.logins}"
       - log: "${logins}"
 
       - task: http
