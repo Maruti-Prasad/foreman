@@ -22,7 +22,7 @@ flows:
      ignoreSslErrors: true
     out: rsp
      
-  - log: "statusCode: ${rsp.content}"
+  - log: "statusCode: ${rsp.content.results.id}"
 
   - script: python
     body: |
@@ -96,7 +96,6 @@ flows:
       - log: "Create new group response: ${createRsp}"
       - set:
           newGroupId: ${createRsp.content.id}
-          body: '{"id": "${newGroupId}" ,"name": "${NewgroupName}","admin": false,"users": ${user_ids},"roles": [],"usergroups": []}'
 
       - log: "${body}"
       - task: http
@@ -114,9 +113,6 @@ flows:
           response: json
           body: '{"id": "${newGroupId}" ,"name": "${NewgroupName}","admin": false,"users": ${user_ids},"roles": [],"usergroups": []}'
         out: response
-        
-      - log: "Response status: ${response.statusCode}"
-      - log: "Response body: ${response.content}"
  
       # Add your delete logic here
       - task: http
