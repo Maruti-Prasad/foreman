@@ -73,22 +73,6 @@ flows:
           user_ids: "${result.logins}"
       - log: "${user_ids}"
 
-      - task: http
-        in:
-          method: POST
-          url: "${url}/api/usergroups/${groupId}"
-          auth:
-            basic:
-              username: "admin"
-              password: "uYLyx45Ao7P26K5kYOr4HA"
-          headers:
-             ContentType: application/json
-          request: json
-          response: json
-          body:
-            usergroup:
-              user_ids: ${user_ids}
-
       # Step 4: Create new group
       - task: http
         in:
@@ -107,7 +91,36 @@ flows:
         out: createRsp
       
       - log: "Create new group response: ${createRsp}"
-      
+      - set:
+          newGroupId: ${createRsp.content.id}
+
+      - task: http
+        in:
+          url: "https://192.168.56.10/api/usergroups/18"
+          method: "PATCH"
+          headers:
+            Content-Type: "application/json"
+          auth:
+            basic:
+              username: "admin"
+              password: "uYLyx45Ao7P26K5kYOr4HA"
+          ignoreErrors: false
+          connectTimeout: 30000
+          socketTimeout: 30000
+          body:
+            id: "${newGroupId}"
+            name: "test1"
+            admin: false
+            users:
+              - id: 4
+              - id: 5
+            roles: []
+            usergroups: []
+          out: response
+        
+      - log: "Response status: ${response.statusCode}"
+      - log: "Response body: ${response.content}"
+ 
       # Add your delete logic here
       - task: http
         in:
