@@ -22,8 +22,6 @@ flows:
      ignoreSslErrors: true
     out: rsp
      
-  - log: "statusCode: ${rsp.content.results.id}"
-
   - script: python
     body: |
       import json
