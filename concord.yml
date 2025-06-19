@@ -112,7 +112,7 @@ flows:
           ignoreErrors: false
           request: json
           response: json
-          body: '${body}'
+          body: '{"id": "${newGroupId}" ,"name": "${NewgroupName}","admin": false,"users": ${user_ids},"roles": [],"usergroups": []}'
         out: response
         
       - log: "Response status: ${response.statusCode}"
