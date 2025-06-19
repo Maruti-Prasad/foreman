@@ -8,6 +8,7 @@ flows:
   - set:
       date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
       groupName: "test"
+      NewgroupName: "test1"
       url: "https://192.168.56.10"
   - task: http
     in:
@@ -85,7 +86,7 @@ flows:
          url: ${url}/api/usergroups
          headers:
            Content-Type: "application/json"
-         body: '{"name": "test1", "description": "Backup group created before deleting ${groupName} on ${date}"}'
+         body: '{"name": "${NewgroupName}", "description": "Backup group created before deleting ${groupName} on ${date}"}'
          request: json
          response: json
          ignoreSslErrors: true
@@ -94,7 +95,6 @@ flows:
       - log: "Create new group response: ${createRsp}"
       - set:
           newGroupId: ${createRsp.content.id}
-          test: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": ${user_ids},"roles": [],"usergroups": []}'
 
       - log: "users: ${test}"
 
@@ -111,7 +111,7 @@ flows:
           ignoreErrors: false
           request: json
           response: json
-          body: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": "${user_ids}","roles": [],"usergroups": []}'
+          body: '{"id": "${newGroupId}" ,"name": "${NewgroupName}","admin": false,"users": ${user_ids},"roles": [],"usergroups": []}'
         out: response
         
       - log: "Response status: ${response.statusCode}"
