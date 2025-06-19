@@ -95,6 +95,8 @@ flows:
       - set:
           newGroupId: ${createRsp.content.id}
 
+      - log: "users": "${user_ids}"
+
       - task: http
         in:
           url: "https://192.168.56.10/api/usergroups/${newGroupId}"
