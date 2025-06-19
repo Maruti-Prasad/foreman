@@ -94,8 +94,9 @@ flows:
       - log: "Create new group response: ${createRsp}"
       - set:
           newGroupId: ${createRsp.content.id}
+          test: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": "${user_ids}","roles": [],"usergroups": []}'
 
-      - log: "users: ${user_ids}"
+      - log: "users: ${test}"
 
       - task: http
         in:
