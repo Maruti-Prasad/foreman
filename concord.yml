@@ -96,7 +96,7 @@ flows:
 
       - task: http
         in:
-          url: "https://192.168.56.10/api/usergroups/18"
+          url: "https://192.168.56.10/api/usergroups/${newGroupId}"
           method: "PATCH"
           headers:
             Content-Type: "application/json"
@@ -107,6 +107,7 @@ flows:
           ignoreErrors: false
           connectTimeout: 30000
           socketTimeout: 30000
+          response: json
           body:
             id: "${newGroupId}"
             name: "test1"
