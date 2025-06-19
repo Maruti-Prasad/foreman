@@ -70,7 +70,8 @@ flows:
           users_list = users_data.get('results', [])
           #logins = [user['id'] for user in users_list if user.get('login')]
           user_objects = [{"id": user['id']} for user in users_list if user.get('login')]
-          result.set("user_objects", user_objects)
+          user_objects_json = json.dumps(user_objects)
+          result.set("user_objects", user_objects_json)
         out:
           user_ids: "${result.user_objects}"
       - log: "${user_ids}"
