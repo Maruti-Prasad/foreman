@@ -97,7 +97,7 @@ flows:
       - task: http
         in:
           url: "https://192.168.56.10/api/usergroups/${newGroupId}"
-          method: "PATCH"
+          method: PATCH
           headers:
             Content-Type: "application/json"
           auth:
@@ -105,18 +105,9 @@ flows:
               username: "admin"
               password: "uYLyx45Ao7P26K5kYOr4HA"
           ignoreErrors: false
-          connectTimeout: 30000
-          socketTimeout: 30000
+          request: json
           response: json
-          body:
-            id: "${newGroupId}"
-            name: "test1"
-            admin: false
-            users:
-              - id: 4
-              - id: 5
-            roles: []
-            usergroups: []
+          body: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": [{ "id": 4 },{ "id": 5 }],"roles": [],"usergroups": []}'
           out: response
         
       - log: "Response status: ${response.statusCode}"
