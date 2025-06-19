@@ -67,10 +67,11 @@ flows:
           import json
           users_data = usersRsp.get('content', {})
           users_list = users_data.get('results', [])
-          logins = [user['id'] for user in users_list if user.get('login')]
-          result.set("logins", logins)
+          #logins = [user['id'] for user in users_list if user.get('login')]
+          user_objects = [{"id": user['id']} for user in users_list if user.get('login')]
+          result.set("user_objects", user_objects)
         out:
-          user_ids: "${result.logins}"
+          user_ids: "${result.user_objects}"
       - log: "${user_ids}"
 
       # Step 4: Create new group
@@ -107,7 +108,7 @@ flows:
           ignoreErrors: false
           request: json
           response: json
-          body: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": [{ "id": 4 },{ "id": 5 }],"roles": [],"usergroups": []}'
+          body: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": "${user_ids}","roles": [],"usergroups": []}'
         out: response
         
       - log: "Response status: ${response.statusCode}"
