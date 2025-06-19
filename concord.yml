@@ -95,7 +95,7 @@ flows:
       - set:
           newGroupId: ${createRsp.content.id}
 
-      - log: "users": "${user_ids}"
+      - log: "users: ${user_ids}"
 
       - task: http
         in:
