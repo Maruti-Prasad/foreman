@@ -108,7 +108,7 @@ flows:
           request: json
           response: json
           body: '{"id": "${newGroupId}" ,"name": "test1","admin": false,"users": [{ "id": 4 },{ "id": 5 }],"roles": [],"usergroups": []}'
-          out: response
+        out: response
         
       - log: "Response status: ${response.statusCode}"
       - log: "Response body: ${response.content}"
