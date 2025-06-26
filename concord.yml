@@ -100,3 +100,18 @@ flows:
       
       - log: "External usergroup mapping created successfully: ${createExternalUsergroupResponse}"
 
+      # Add your delete logic here
+      - task: http
+        in:
+         method: DELETE
+         auth:
+          basic:
+            username: "admin"
+            password: "uYLyx45Ao7P26K5kYOr4HA"
+         url: ${url}/api/usergroups/${groupId}
+         ignoreSslErrors: true
+        out: deleteRsp
+      - log: "Delete response: ${deleteRsp.statusCode}"
+    else:
+      - log: "Cannot delete group - group not found"
+
