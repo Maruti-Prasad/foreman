@@ -53,7 +53,7 @@ flows:
       # Step 3: Get users in the original group
       - task: http
         in:
-          url: "${apiBaseUrl}/usergroups"
+          url: "${url}/api/usergroups"
           method: "POST"
           headers:
             Content-Type: "application/json"
@@ -76,7 +76,7 @@ flows:
       # Create external usergroup mapping
       - task: http
         in:
-          url: "${apiBaseUrl}/usergroups/16/external_usergroups"
+          url: "${url}/api/usergroups/16/external_usergroups"
           method: "POST"
           headers:
             Content-Type: "application/json"
