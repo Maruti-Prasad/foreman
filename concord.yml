@@ -106,8 +106,8 @@ flows:
          method: DELETE
          auth:
           basic:
-            username: "admin"
-            password: "uYLyx45Ao7P26K5kYOr4HA"
+            username: "${adminUser}"
+            password: "${adminPassword}"
          url: ${url}/api/usergroups/${groupId}
          ignoreSslErrors: true
         out: deleteRsp
