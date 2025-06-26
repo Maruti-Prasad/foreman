@@ -55,6 +55,8 @@ flows:
         in:
           url: "${url}/api/usergroups"
           method: "POST"
+          request: json
+          response: json
           headers:
             Content-Type: "application/json"
           auth:
@@ -78,6 +80,8 @@ flows:
         in:
           url: "${url}/api/usergroups/16/external_usergroups"
           method: "POST"
+          request: json
+          response: json
           headers:
             Content-Type: "application/json"
           auth:
