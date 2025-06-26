@@ -1,58 +1,95 @@
 configuration:
   dependencies:
-    - "mvn://com.walmartlabs.concord.plugins:http-tasks:1.92.0"
-  
-  arguments:
-    apiBaseUrl: "https://192.168.56.10/api"
-    adminUser: "admin"
-    adminPassword: "-NAHCyL6QRqgYrGc-Wdfsg"
+  - "mvn://org.python:jython-standalone:2.7.4"
+  runtime: "concord-v2"
 
 flows:
   default:
-    - log: "Creating usergroup and external usergroup mapping"
-    
-    # Create usergroup
-    - task: http
-      in:
-        url: "${apiBaseUrl}/usergroups"
-        method: "POST"
-        headers:
-          Content-Type: "application/json"
-        auth:
-          basic:
-            username: "${adminUser}"
-            password: "${adminPassword}"
-        body:
-          usergroup:
-            name: "marketingops"
-            admin: true
-        ignoreErrors: false
-        connectTimeout: 30000
-        readTimeout: 60000
-        verifySsl: false
-      out: createUsergroupResponse
-    
-    - log: "Usergroup created successfully: ${createUsergroupResponse}"
-    
-    # Create external usergroup mapping
-    - task: http
-      in:
-        url: "${apiBaseUrl}/usergroups/16/external_usergroups"
-        method: "POST"
-        headers:
-          Content-Type: "application/json"
-        auth:
-          basic:
-            username: "${adminUser}"
-            password: "${adminPassword}"
-        body:
-          external_usergroup:
-            auth_source_id: 4
-            name: "marketingops"
-        ignoreErrors: false
-        connectTimeout: 30000
-        readTimeout: 60000
-        verifySsl: false
-      out: createExternalUsergroupResponse
-    
-    - log: "External usergroup mapping created successfully: ${createExternalUsergroupResponse}"
+  - set:
+      date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
+      groupName: "marketingops"
+      NewgroupName: "test1"
+      url: "https://192.168.56.10"
+  - task: http
+    in:
+     method: GET
+     auth:
+      basic:
+        username: "admin"
+        password: "uYLyx45Ao7P26K5kYOr4HA"
+     url: ${url}/api/usergroups
+     response: "json"
+     ignoreSslErrors: true
+    out: rsp
+     
+  - script: python
+    body: |
+      import json
+      response_data = rsp['content']
+      group_id = None
+      for group in response_data.get('results', []):
+          if group.get('name') == groupName:
+              group_id = group.get('id')
+              break
+      if group_id is None:
+          print("Group '{}' not found".format(groupName))
+          result.set('groupId', "")  # Set empty string instead of None
+          result.set('foundGroup', False)
+      else:
+          print("Found group '{}' with ID: {}".format(groupName, group_id))
+          result.set('groupId', str(group_id))  # Convert to string
+          result.set('foundGroup', True)
+    out:
+      groupId: "${result.groupId}"
+      foundGroup: "${result.foundGroup}"
+
+
+  - if: ${foundGroup}
+    then:
+      - log: "Group ID found: ${groupId}"
+      # Step 3: Get users in the original group
+      - task: http
+        in:
+          url: "${apiBaseUrl}/usergroups"
+          method: "POST"
+          headers:
+            Content-Type: "application/json"
+          auth:
+            basic:
+              username: "${adminUser}"
+              password: "${adminPassword}"
+          body:
+            usergroup:
+              name: "marketingops"
+              admin: true
+          ignoreErrors: false
+          connectTimeout: 30000
+          readTimeout: 60000
+          verifySsl: false
+        out: createUsergroupResponse
+      
+      - log: "Usergroup created successfully: ${createUsergroupResponse}"
+      
+      # Create external usergroup mapping
+      - task: http
+        in:
+          url: "${apiBaseUrl}/usergroups/16/external_usergroups"
+          method: "POST"
+          headers:
+            Content-Type: "application/json"
+          auth:
+            basic:
+              username: "${adminUser}"
+              password: "${adminPassword}"
+          body:
+            external_usergroup:
+              auth_source_id: 4
+              name: "marketingops"
+          ignoreErrors: false
+          connectTimeout: 30000
+          readTimeout: 60000
+          verifySsl: false
+        out: createExternalUsergroupResponse
+      
+      - log: "External usergroup mapping created successfully: ${createExternalUsergroupResponse}"
+
