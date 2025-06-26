@@ -8,7 +8,7 @@ flows:
   - set:
       date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
       groupName: "marketing"
-      NewgroupName: "test1"
+      NewgroupName: "marketingops"
       url: "https://192.168.56.10"
       adminUser: "admin"
       adminPassword: "-NAHCyL6QRqgYrGc-Wdfsg"
@@ -65,7 +65,7 @@ flows:
               password: "${adminPassword}"
           body:
             usergroup:
-              name: "marketingops"
+              name: "${NewgroupName}"
               admin: true
           ignoreErrors: false
           connectTimeout: 30000
@@ -91,7 +91,7 @@ flows:
           body:
             external_usergroup:
               auth_source_id: 4
-              name: "marketingops"
+              name: "${NewgroupName}"
           ignoreErrors: false
           connectTimeout: 30000
           readTimeout: 60000
