@@ -16,7 +16,7 @@ flows:
      auth:
       basic:
         username: "admin"
-        password: "uYLyx45Ao7P26K5kYOr4HA"
+        password: "${adminPassword}"
      url: ${url}/api/usergroups
      response: "json"
      ignoreSslErrors: true
