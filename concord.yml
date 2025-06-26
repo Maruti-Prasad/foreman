@@ -73,12 +73,12 @@ flows:
           verifySsl: false
         out: createUsergroupResponse
       
-      - log: "Usergroup created successfully: ${createUsergroupResponse}"
+      - log: "Usergroup created successfully: ${createUsergroupResponse.content.id}"
       
       # Create external usergroup mapping
       - task: http
         in:
-          url: "${url}/api/usergroups/16/external_usergroups"
+          url: "${url}/api/usergroups/${createUsergroupResponse.content.id}/external_usergroups"
           method: "POST"
           request: json
           response: json
