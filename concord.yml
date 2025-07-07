@@ -36,8 +36,6 @@ flows:
   default:
   - form: selectForeman
   - script: groovy
-    in:
-      vars: ${vars}
     body: |
       def foremanData = [
         "foreman-test": ["url": "https://foreman-test.wal-mart.com", "token": "hPk8lqNlkLaUYqWvFxzFnQ"],
