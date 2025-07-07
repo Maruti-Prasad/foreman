@@ -17,7 +17,7 @@ configuration:
 
 forms:
   selectForeman:
-    - foremanEnv:
+    - selectedSystem:
         label: "Select Foreman Environment"
         type: "string"
         inputType: select
@@ -55,7 +55,7 @@ flows:
         "puppet-prod": ["url": "https://pe-console.wal-mart.com/", "token": "0a2jhCgGlFv2ESepYQUGZK0bOEQFo4Abd_ffgJKp_OOo", "apiUrl": "https://oser501241.wal-mart.com:4433"]
       ]
 
-      def selected = vars["selectedSystem"]
+      def selected = execution.getVariable("selectedSystem")
 
       if (foremanData.containsKey(selected)) {
         def item = foremanData[selected]
