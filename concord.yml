@@ -16,16 +16,16 @@ configuration:
 
 forms:
   selectForeman:
-    - foremanEnv:
-        label: "Select Foreman Environment"
-        type: "string"
-        options:
-          - label: "Foreman Test"
-            value: "test"
-          - label: "Foreman CFTest"
-            value: "cftest"
-          - label: "Foreman HO"
-            value: "ho"
+  - foremanEnv:
+      label: "Select Foreman Environment"
+      type: "string"
+      options:
+        - label: "Foreman Test"
+          value: "test"
+        - label: "Foreman CFTest"
+          value: "cftest"
+        - label: "Foreman HO"
+          value: "ho"
 flows:
   default:
   - form: selectForeman
