@@ -1,27 +1,8 @@
 configuration:
   dependencies:
   - "mvn://org.python:jython-standalone:2.7.4"
-  - "mvn://org.codehaus.groovy:groovy-all:pom:2.5.23"
   runtime: "concord-v2"
-  arguments:
-    foreman:
-      test:
-        url: "https://foreman-test.wal-mart.com"
-        token: "hPk8lqNlkLaUYqWvFxzFnQ"
-      cftest:
-        url: "foreman-cftest.wal-mart.com"
-        token: "EXL3rH6oefyNhWZtnaMSvQ"
-      ho:
-        url: "https://foreman-ho.wal-mart.com"
-        token: "lo-g-rXXnp0zLeRiaV1ggQ"
 
-forms:
-  selectForeman:
-  - selectedSystem:
-      label: "Select Secret Group"
-      type: "string"
-      allow: ["foreman-test", "foreman-cftest"]
-flows:
   default:
   - form: selectForeman
     yield: true
@@ -71,18 +52,74 @@ flows:
         throw new RuntimeException("Unknown system selected: " + selected)
       }
     out:
+      systemType: "${result.systemType}"
       selectedUrl: "${result.selectedUrl}"
-      selectedToken: "${result.token}"
+      selectedToken: "${result.selectedToken}"
       apiUrl: "${result.apiUrl}"
 
-  - log: "Selected URL: ${selectedToken} ${apiUrl}"
+  - log: "Selected URL: ${selectedToken} ${apiUrl} ${systemType}"
+
+flows:
+  puppet:
   - set:
-      date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
-      groupName: "marketing"
-      NewgroupName: "marketingops"
-      url: "https://192.168.56.10"
-      adminUser: "admin"
-      adminPassword: "-NAHCyL6QRqgYrGc-Wdfsg"
+      groupName: "ConfigurationManagement"
+      url: "https://tstr500643.wal-mart.com:4433"
+  - task: http
+    in:
+     method: GET
+     url: ${url}/rbac-api/v1/groups
+     headers:
+       X-Authentication: 0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU
+     response: "json"
+     ignoreSslErrors: true
+    out: rsp
+     
+  - log: "statusCode: ${rsp.content}"
+
+  - script: python
+    body: |
+      import json
+      response_data = rsp['content']
+      group_id = None
+      for group in response_data:
+          if group.get('display_name') == groupName:
+              group_id = group.get('id')
+              break
+      if group_id is None:
+          print("Group '{}' not found".format(groupName))
+          result.set('groupId', "")  # Set empty string instead of None
+          result.set('foundGroup', False)
+      else:
+          print("Found group '{}' with ID: {}".format(groupName, group_id))
+          result.set('groupId', str(group_id))  # Convert to string
+          result.set('foundGroup', True)
+    out:
+      groupId: "${result.groupId}"
+      foundGroup: "${result.foundGroup}"
+
+
+  - if: ${foundGroup}
+    then:
+      - log: "Group ID found: ${groupId}"
+      - task: http
+        in:
+         method: DELETE
+         url: ${url}/rbac-api/v1/groups/${groupId}
+         headers:
+           X-Authentication: 0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU
+         ignoreSslErrors: true
+        out: deleteRsp
+      - log: "Delete response: ${deleteRsp.statusCode}"
+    else:
+      - log: "Cannot delete group - group not found"
+
+  foreman:
+  - set:
+      groupName: "ConfigurationManagement"
+      NewgroupName: "Puppet-Config-Administrators"
+      url: "https://foreman-cftest.wal-mart.com"
+      adminUser: "vn58g5r"
+      adminPassword: "EXL3rH6oefyNhWZtnaMSvQ"
 
   - task: http
     in:
@@ -185,4 +222,3 @@ flows:
       - log: "Delete response: ${deleteRsp.statusCode}"
     else:
       - log: "Cannot delete group - group not found"
-
