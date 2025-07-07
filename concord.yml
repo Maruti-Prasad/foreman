@@ -1,6 +1,7 @@
 configuration:
   dependencies:
   - "mvn://org.python:jython-standalone:2.7.4"
+  - "mvn://org.codehaus.groovy:groovy-all:pom:2.5.23"
   runtime: "concord-v2"
 
 forms:
