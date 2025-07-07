@@ -20,7 +20,6 @@ forms:
     - selectedSystem:
         label: "Select Foreman Environment"
         type: "string"
-        inputType: select
         allow:
           - foreman-test
           - foreman-cftest
