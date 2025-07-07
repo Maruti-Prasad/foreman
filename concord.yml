@@ -27,7 +27,7 @@ flows:
     yield: true
   - log: "✅ Form completed. Proceeding with selectedSystem = ${selectForeman.selectedSystem}"
   - set:
-      selectedSystem : ${selectForeman.selectedSystem}"
+      selectedSystem : ${selectForeman.selectedSystem}
   - script: groovy
     body: |
       println "DEBUG - All execution vars:"
