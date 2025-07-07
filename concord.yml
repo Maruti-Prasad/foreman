@@ -68,16 +68,30 @@ flows:
 
   - log: "Selected URL: ${selectedToken} ${apiUrl} ${systemType}"
 
+  - if: ${systemType == "Foreman"}
+    then:
+      - call: foreman
+        in:
+          url: "${selectedUrl}"
+          token: "${selectedToken}"
+
+    - if: ${systemType == "Puppet"}
+      then: 
+      - call: puppet
+        in:
+          url: "${selectedUrl}"
+          token: "${selectedToken}"
+          apiUrl: "${apiUrl}"
+
   puppet:
   - set:
       groupName: "ConfigurationManagement"
-      url: "https://tstr500643.wal-mart.com:4433"
   - task: http
     in:
      method: GET
      url: ${url}/rbac-api/v1/groups
      headers:
-       X-Authentication: 0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU
+       X-Authentication: ${token}
      response: "json"
      ignoreSslErrors: true
     out: rsp
@@ -114,7 +128,7 @@ flows:
          method: DELETE
          url: ${url}/rbac-api/v1/groups/${groupId}
          headers:
-           X-Authentication: 0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU
+           X-Authentication: ${token} 
          ignoreSslErrors: true
         out: deleteRsp
       - log: "Delete response: ${deleteRsp.statusCode}"
@@ -125,9 +139,8 @@ flows:
   - set:
       groupName: "ConfigurationManagement"
       NewgroupName: "Puppet-Config-Administrators"
-      url: "https://foreman-cftest.wal-mart.com"
       adminUser: "vn58g5r"
-      adminPassword: "EXL3rH6oefyNhWZtnaMSvQ"
+      adminPassword: "${token}"
 
   - task: http
     in:
