@@ -16,12 +16,11 @@ configuration:
         token: "lo-g-rXXnp0zLeRiaV1ggQ"
 
 forms:
-  Concord:
   selectForeman:
   - selectedSystem:
       label: "Select Secret Group"
       type: "string"
-      allow: ["foreman-test","foreman-cftest"]
+      allow: ["foreman-test", "foreman-cftest"]
 flows:
   default:
   - form: selectForeman
