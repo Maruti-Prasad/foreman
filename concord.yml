@@ -51,7 +51,6 @@ flows:
         "puppet-test": ["url": "https://pe-console-test.wal-mart.com/", "token": "0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU", "apiUrl": "https://tstr500643.wal-mart.com:4433"],
         "puppet-prod": ["url": "https://pe-console.wal-mart.com/", "token": "0a2jhCgGlFv2ESepYQUGZK0bOEQFo4Abd_ffgJKp_OOo", "apiUrl": "https://oser501241.wal-mart.com:4433"]
       ]
-      println "Execution variables: " + execution.variables()
 
       def selected = execution.variables().get("selectedSystem")
 
