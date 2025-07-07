@@ -39,9 +39,7 @@ flows:
   - script: groovy
     body: |
       println "DEBUG - All execution vars:"
-      execution.variables().keySet().each { key ->
-        println "VAR: ${key} = ${execution.variables().get(key)}"
-      }
+      println "DEBUG - selectedSystem = " + execution.variables().get("selectedSystem")
   - script: groovy
     body: |
       def foremanData = [
