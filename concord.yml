@@ -39,7 +39,7 @@ flows:
   - script: groovy
     body: |
       println "DEBUG - All execution vars:"
-      excution.variables().keySet().each { key ->
+      execution.variables().keySet().each { key ->
         println "VAR: ${key} = ${execution.variables().get(key)}"
       }
   - script: groovy
