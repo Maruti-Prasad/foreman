@@ -9,7 +9,7 @@ forms:
   - selectedSystem:
       label: "Select Secret Group"
       type: "string"
-      allow: ["foreman-test", "foreman-cftest"]
+      allow: ["foreman-test", "foreman-cftest", "puppet-test", "puppet-prod"]
 
 flows:
   default:
@@ -66,7 +66,7 @@ flows:
       selectedToken: "${result.selectedToken}"
       apiUrl: "${result.apiUrl}"
 
-  - log: "Selected URL: ${selectedToken} ${apiUrl} ${systemType}"
+  - log: "Selected URL: ${ selectedUrl} ${selectedToken} ${apiUrl} ${systemType}"
 
   - if: ${systemType == "Foreman"}
     then:
