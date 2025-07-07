@@ -19,7 +19,7 @@ flows:
   - script: groovy
     body: |
       def foremanData = [
-        "foreman-test": ["url": "https://foreman-test.wal-mart.com", "token": "hPk8lqNlkLaUYqWvFxzFnQ"]
+        "foreman-test": ["url": "https://192.168.56.10", "token": "nPJHK6C_TCLQOuUkp9kIAA"]
       ]
 
       def puppetData = [
@@ -121,9 +121,9 @@ flows:
 
   foreman:
   - set:
-      groupName: "ConfigurationManagement"
-      NewgroupName: "Puppet-Config-Administrators"
-      adminUser: "vn58g5r"
+      groupName: "marketing"
+      NewgroupName: "marketingops"
+      adminUser: "admin"
       adminPassword: "${token}"
 
   - task: http
