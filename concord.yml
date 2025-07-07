@@ -1,6 +1,7 @@
 configuration:
   dependencies:
   - "mvn://org.python:jython-standalone:2.7.4"
+  - "mvn://org.codehaus.groovy:groovy-all:pom:2.5.23"
   runtime: "concord-v2"
   arguments:
     foreman:
@@ -21,16 +22,57 @@ forms:
         type: "string"
         inputType: select
         allow:
-          test: "Foreman Test"
-          cftest: "Foreman CFTest"
-          ho: "Foreman HO"
+          - foreman-test
+          - foreman-cftest
+          - foreman-ho
+          - foreman-cloud
+          - foreman-store1
+          - foreman-store2
+          - foreman-store3
+          - foreman-store4
+          - foreman-store5
+          - foreman-store6
 flows:
   default:
   - form: selectForeman
-  - set:
-      selected: ${foreman[selectForeman.foremanEnv]}
-  - log: "Selected URL: ${selected.url}"
-  - log: "Token: ${selected.token}"
+  - script: groovy
+    body: |
+      def foremanData = [
+        "foreman-test": ["url": "https://foreman-test.wal-mart.com", "token": "hPk8lqNlkLaUYqWvFxzFnQ"],
+        "foreman-cftest": ["url": "https://foreman-cftest.wal-mart.com", "token": "EXL3rH6oefyNhWZtnaMSvQ"],
+        "foreman-ho": ["url": "https://foreman-ho.wal-mart.com", "token": "lo-g-rXXnp0zLeRiaV1ggQ"],
+        "foreman-cloud": ["url": "https://foreman-cloud.wal-mart.com", "token": "M0zTwxG0SGTepGVyhQQmsg"],
+        "foreman-store1": ["url": "https://foreman-store1.wal-mart.com/", "token": "CiHr2meKdRZh3rMHhBU68g"],
+        "foreman-store2": ["url": "https://foreman-store2.wal-mart.com/", "token": "SkVDLrvHumOT_JjOQdxz4Q"],
+        "foreman-store3": ["url": "https://foreman-store3.wal-mart.com", "token": "J2wbXzltz2uJKOiCQ5Hhiw"],
+        "foreman-store4": ["url": "https://foreman-store4.wal-mart.com/", "token": "iXwZl-6T1-O6RqfjWtxCbA"],
+        "foreman-store5": ["url": "https://foreman-store5.wal-mart.com/", "token": "0wnNtvcI3S453r-22eLfDg"],
+        "foreman-store6": ["url": "https://foreman-store6.wal-mart.com/", "token": "Not able to login"]
+      ]
+
+      def puppetData = [
+        "puppet-test": ["url": "https://pe-console-test.wal-mart.com/", "token": "0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU", "apiUrl": "https://tstr500643.wal-mart.com:4433"],
+        "puppet-prod": ["url": "https://pe-console.wal-mart.com/", "token": "0a2jhCgGlFv2ESepYQUGZK0bOEQFo4Abd_ffgJKp_OOo", "apiUrl": "https://oser501241.wal-mart.com:4433"]
+      ]
+
+      def selected = vars["selectedSystem"]
+
+      if (foremanData.containsKey(selected)) {
+        def item = foremanData[selected]
+        execution.setVariable("systemType", "Foreman")
+        execution.setVariable("selectedUrl", item["url"])
+        execution.setVariable("selectedToken", item["token"])
+      } else if (puppetData.containsKey(selected)) {
+        def item = puppetData[selected]
+        execution.setVariable("systemType", "Puppet")
+        execution.setVariable("selectedUrl", item["url"])
+        execution.setVariable("selectedToken", item["token"])
+        execution.setVariable("apiUrl", item["apiUrl"])
+      } else {
+        throw new RuntimeException("Unknown system selected: " + selected)
+      }
+
+  - log: "Selected URL: ${selectedUrl}"
   - set:
       date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
       groupName: "marketing"
