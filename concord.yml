@@ -56,15 +56,16 @@ flows:
 
       if (foremanData.containsKey(selected)) {
         def item = foremanData[selected]
-        execution.setVariable("systemType", "Foreman")
-        execution.setVariable("selectedUrl", item["url"])
-        execution.setVariable("selectedToken", item["token"])
+        result.set("systemType", "Foreman")
+        result.set("selectedUrl", item["url"])
+        result.set("selectedToken", item["token"])
+
       } else if (puppetData.containsKey(selected)) {
         def item = puppetData[selected]
-        execution.setVariable("systemType", "Puppet")
-        execution.setVariable("selectedUrl", item["url"])
-        execution.setVariable("selectedToken", item["token"])
-        execution.setVariable("apiUrl", item["apiUrl"])
+        result.set("systemType", "Puppet")
+        result.set("selectedUrl", item["url"])
+        result.set("selectedToken", item["token"])
+        result.set("apiUrl", item["apiUrl"])
       } else {
         throw new RuntimeException("Unknown system selected: " + selected)
       }
