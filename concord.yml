@@ -69,6 +69,7 @@ flows:
       } else {
         throw new RuntimeException("Unknown system selected: " + selected)
       }
+      println "DEBUG - selectedSystem = " + selectedUrl
 
   - log: "Selected URL: ${selectedUrl}"
   - set:
