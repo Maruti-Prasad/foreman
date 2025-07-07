@@ -16,21 +16,12 @@ configuration:
         token: "lo-g-rXXnp0zLeRiaV1ggQ"
 
 forms:
+  Concord:
   selectForeman:
-    - selectedSystem:
-        label: "Select Foreman Environment"
-        type: "string"
-        allow:
-          - foreman-test
-          - foreman-cftest
-          - foreman-ho
-          - foreman-cloud
-          - foreman-store1
-          - foreman-store2
-          - foreman-store3
-          - foreman-store4
-          - foreman-store5
-          - foreman-store6
+  - selectedSystem:
+      label: "Select Secret Group"
+      type: "string"
+      allow: ["foreman-test","foreman-cftest"]
 flows:
   default:
   - form: selectForeman
