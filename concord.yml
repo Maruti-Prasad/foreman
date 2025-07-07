@@ -35,9 +35,7 @@ forms:
 flows:
   default:
   - form: selectForeman
-    register: formResult
-  - set:
-    selectedSystem: "${formResult.selectedSystem}"
+    yield: true
   - script: groovy
     body: |
       def foremanData = [
