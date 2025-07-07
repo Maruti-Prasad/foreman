@@ -16,14 +16,14 @@ configuration:
 
 forms:
   selectForeman:
-  - foremanEnv:
-      label: "Select Foreman Environment"
-      type: "string"
-      inputType: select
-      allow:
-        test: "Foreman Test"
-        cftest: "Foreman CFTest"
-        ho: "Foreman HO"
+    - foremanEnv:
+        label: "Select Foreman Environment"
+        type: "string"
+        inputType: select
+        allow:
+          test: "Foreman Test"
+          cftest: "Foreman CFTest"
+          ho: "Foreman HO"
 flows:
   default:
   - form: selectForeman
