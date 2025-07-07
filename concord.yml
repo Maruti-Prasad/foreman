@@ -59,7 +59,7 @@ flows:
         result.set("systemType", "Foreman")
         result.set("selectedUrl", item["url"])
         result.set("selectedToken", item["token"])
-        result.set("apiUrl", null)
+        result.set("apiUrl", "NONE")
 
       } else if (puppetData.containsKey(selected)) {
         def item = puppetData[selected]
