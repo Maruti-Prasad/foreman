@@ -121,9 +121,9 @@ flows:
 
   foreman:
   - set:
-      groupName: "marketing"
-      NewgroupName: "marketingops"
-      adminUser: "admin"
+      groupName: "ConfigurationManagement"
+      NewgroupName: "Puppet-Config-Administrators"
+      adminUser: "vn58g5r"
       adminPassword: "${token}"
 
   - task: http
