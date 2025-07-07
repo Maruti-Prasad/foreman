@@ -14,14 +14,8 @@ forms:
 flows:
   default:
   - form: selectForeman
-    yield: true
-  - log: "✅ Form completed. Proceeding with selectedSystem = ${selectForeman.selectedSystem}"
   - set:
       selectedSystem : ${selectForeman.selectedSystem}
-  - script: groovy
-    body: |
-      println "DEBUG - All execution vars:"
-      println "DEBUG - selectedSystem = " + execution.variables().get("selectedSystem")
   - script: groovy
     body: |
       def foremanData = [
@@ -34,7 +28,6 @@ flows:
         "foreman-store3": ["url": "https://foreman-store3.wal-mart.com", "token": "J2wbXzltz2uJKOiCQ5Hhiw"],
         "foreman-store4": ["url": "https://foreman-store4.wal-mart.com/", "token": "iXwZl-6T1-O6RqfjWtxCbA"],
         "foreman-store5": ["url": "https://foreman-store5.wal-mart.com/", "token": "0wnNtvcI3S453r-22eLfDg"],
-        "foreman-store6": ["url": "https://foreman-store6.wal-mart.com/", "token": "Not able to login"]
       ]
 
       def puppetData = [
