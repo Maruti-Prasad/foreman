@@ -23,7 +23,7 @@ flows:
       ]
 
       def puppetData = [
-        "puppet-test": ["url": "https://pe-console-test.wal-mart.com/", "token": "0FgfiGyzE4fCEUT9ieqVhjgdpMZwrJ-OSJjZujSP6QiU1", "apiUrl": "https://tstr500643.wal-mart.com:4433"]
+        "puppet-test": ["url": "https://pe-console-test.wal-mart.com/", "token": "0SrfiAZ-IQr-OaYwdzFPQ3am3gNW6BGCXiVtambvtCuM", "apiUrl": "https://puppet-enterprice.local:4433"]
       ]
 
       def selected = execution.variables().get("selectedSystem")
