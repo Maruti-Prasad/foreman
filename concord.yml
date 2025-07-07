@@ -3,6 +3,14 @@ configuration:
   - "mvn://org.python:jython-standalone:2.7.4"
   runtime: "concord-v2"
 
+forms:
+  selectForeman:
+  - selectedSystem:
+      label: "Select Secret Group"
+      type: "string"
+      allow: ["foreman-test", "foreman-cftest"]
+
+flows:
   default:
   - form: selectForeman
     yield: true
@@ -59,7 +67,6 @@ configuration:
 
   - log: "Selected URL: ${selectedToken} ${apiUrl} ${systemType}"
 
-flows:
   puppet:
   - set:
       groupName: "ConfigurationManagement"
