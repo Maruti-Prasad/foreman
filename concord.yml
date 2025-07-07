@@ -63,7 +63,7 @@ flows:
     then: 
       - call: puppet
         in:
-          url: "${selectedUrl}"
+          url: "${apiUrl}"
           token: "${selectedToken}"
           apiUrl: "${apiUrl}"
 
