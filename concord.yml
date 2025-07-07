@@ -59,6 +59,7 @@ flows:
         result.set("systemType", "Foreman")
         result.set("selectedUrl", item["url"])
         result.set("selectedToken", item["token"])
+        result.set("apiUrl", null)
 
       } else if (puppetData.containsKey(selected)) {
         def item = puppetData[selected]
@@ -71,8 +72,10 @@ flows:
       }
     out:
       selectedUrl: "${result.selectedUrl}"
+      selectedToken: "${result.token}"
+      apiUrl: "${result.apiUrl}"
 
-  - log: "Selected URL: ${selectedUrl}"
+  - log: "Selected URL: ${selectedToken} ${apiUrl}"
   - set:
       date: "${datetime.format(datetime.current(), 'dd_MM_yyyy')}"
       groupName: "marketing"
