@@ -38,6 +38,12 @@ flows:
     yield: true
   - script: groovy
     body: |
+      println "DEBUG - All execution vars:"
+      execution.variables().entrySet().each {
+        println "KEY = ${it.key} | VALUE = ${it.value}"
+      }
+  - script: groovy
+    body: |
       def foremanData = [
         "foreman-test": ["url": "https://foreman-test.wal-mart.com", "token": "hPk8lqNlkLaUYqWvFxzFnQ"],
         "foreman-cftest": ["url": "https://foreman-cftest.wal-mart.com", "token": "EXL3rH6oefyNhWZtnaMSvQ"],
