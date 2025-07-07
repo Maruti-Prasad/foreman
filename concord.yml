@@ -35,6 +35,7 @@ flows:
   default:
   - form: selectForeman
     yield: true
+  - log: "✅ Form completed. Proceeding with selectedSystem = ${selectedSystem}"
   - script: groovy
     body: |
       println "DEBUG - All execution vars:"
